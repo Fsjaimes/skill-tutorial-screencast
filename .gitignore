@@ -1,0 +1,15 @@
+.DS_Store
+node_modules/
+.idea/
+.vscode/
+*.log
+
+# Artefactos de HyperFrames si se prueba la plantilla dentro del repo
+.hyperframes/
+.thumbnails/
+snapshots/
+renders/
+
+# Resultados de evaluaciones (skill-creator / claude plugin eval)
+evals/results/
+*-workspace/
