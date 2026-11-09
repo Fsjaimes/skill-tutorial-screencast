@@ -1,0 +1,37 @@
+<template>
+  <style>
+    @font-face { font-family: "Saira"; font-weight: 400; src: url("assets/fonts/saira-400.woff2") format("woff2"); }
+    @font-face { font-family: "Saira"; font-weight: 500; src: url("assets/fonts/saira-500.woff2") format("woff2"); }
+    @font-face { font-family: "Saira"; font-weight: 600; src: url("assets/fonts/saira-600.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; z-index: 3; font-family: "Saira", sans-serif; color: #16202a; }
+    #i-panel { position: absolute; inset: 0; background: #f4f7f9; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    #i-lock { display: flex; align-items: center; gap: 18px; margin-bottom: 64px; }
+    .i-mark { width: 64px; height: 64px; border-radius: 14px; background: #25a0e2; color: #fff; font-size: 32px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+    .i-word { font-size: 34px; font-weight: 600; letter-spacing: 0.16em; color: #495057; }
+    .i-tag { margin-left: 4px; padding-left: 18px; border-left: 1px solid #ced4da; font-size: 24px; color: #5d6874; }
+    #i-pill { height: 44px; padding: 0 20px; border-radius: 22px; background: #def1fb; color: #1f88c0; font-size: 22px; font-weight: 600; line-height: 44px; margin-bottom: 28px; }
+    #i-title { font-size: 76px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.08; text-align: center; }
+    #i-title span { display: inline-block; }
+    #i-sub { margin-top: 26px; font-size: 34px; color: #5d6874; }
+  </style>
+  <div id="root" data-composition-id="intro" data-width="1920" data-height="1080">
+    <div id="i-panel" class="clip" data-start="0" data-duration="6.6" data-track-index="1">
+      <div id="i-lock"><span class="i-mark">D</span><span class="i-word">DOMA</span><span class="i-tag">Suite empresarial</span></div>
+      <div id="i-pill">Tutorial</div>
+      <!-- EDITAR: título en dos bloques («Cómo ‹verbo›» / «‹objeto›») y una línea de propósito -->
+      <div id="i-title"><span>Cómo crear</span> <span>un cliente nuevo</span></div>
+      <div id="i-sub">Regístralo una vez y úsalo en toda la app.</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#i-lock", { opacity: 1, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 0);
+    tl.fromTo("#i-pill", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 0.4);
+    tl.fromTo("#i-title span", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.18 }, 0.7);
+    tl.fromTo("#i-sub", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 1.8);
+    tl.fromTo("#i-panel", { yPercent: 0 }, { yPercent: 0, scale: 1.015, duration: 4.0, ease: "none" }, 1.9);
+    // la portada sube y descubre la interfaz
+    tl.fromTo("#i-panel", { yPercent: 0 }, { yPercent: -100, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 6.0);
+    window.__timelines["intro"] = tl;
+  </script>
+</template>

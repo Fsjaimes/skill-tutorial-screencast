@@ -1,0 +1,37 @@
+<template>
+  <style>
+    @font-face { font-family: "Saira"; font-weight: 400; src: url("assets/fonts/saira-400.woff2") format("woff2"); }
+    @font-face { font-family: "Saira"; font-weight: 500; src: url("assets/fonts/saira-500.woff2") format("woff2"); }
+    @font-face { font-family: "Saira"; font-weight: 600; src: url("assets/fonts/saira-600.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; z-index: 3; font-family: "Saira", sans-serif; color: #16202a; }
+    #o-panel { position: absolute; inset: 0; background: #f4f7f9; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    #o-check { width: 96px; height: 96px; border-radius: 50%; background: #25a0e2; display: flex; align-items: center; justify-content: center; margin-bottom: 36px; }
+    #o-title { font-size: 68px; font-weight: 600; letter-spacing: -0.015em; text-align: center; line-height: 1.1; }
+    #o-title span { display: inline-block; }
+    #o-sum { margin-top: 24px; font-size: 34px; color: #5d6874; }
+    #o-lock { position: absolute; left: 0; right: 0; bottom: 110px; display: flex; justify-content: center; align-items: center; gap: 16px; }
+    .o-mark { width: 52px; height: 52px; border-radius: 11px; background: #25a0e2; color: #fff; font-size: 26px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+    .o-word { font-size: 30px; font-weight: 600; letter-spacing: 0.16em; color: #495057; }
+    .o-tag { margin-left: 4px; padding-left: 18px; border-left: 1px solid #ced4da; font-size: 24px; color: #5d6874; }
+  </style>
+  <div id="root" data-composition-id="outro" data-width="1920" data-height="1080">
+    <div id="o-panel" class="clip" data-start="0" data-duration="7" data-track-index="1">
+      <div id="o-check"><svg width="52" height="52" viewBox="0 0 52 52"><path id="o-tick" d="M12 27 L22 37 L41 16" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44" stroke-dashoffset="44"/></svg></div>
+      <div id="o-title"><span>¡Listo!</span> <span>Ya configuraste tu bodega de clasificación.</span></div>
+      <div id="o-sum">Marca los tipos y guarda los cambios.</div>
+      <div id="o-lock"><span class="o-mark">D</span><span class="o-word">DOMA</span><span class="o-tag">Suite empresarial</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // el cierre sube desde abajo y tapa la interfaz
+    tl.fromTo("#o-panel", { yPercent: 100 }, { yPercent: 0, duration: 0.6, ease: "power3.inOut" }, 0);
+    tl.fromTo("#o-check", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.6)" }, 0.6);
+    tl.fromTo("#o-tick", { strokeDashoffset: 44 }, { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 0.85);
+    tl.fromTo("#o-title span", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.25 }, 1.0);
+    tl.fromTo("#o-sum", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 2.0);
+    tl.fromTo("#o-lock", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 2.6);
+    tl.fromTo("#o-panel", { scale: 1 }, { scale: 1.02, duration: 4.4, ease: "none" }, 2.6);
+    window.__timelines["outro"] = tl;
+  </script>
+</template>
