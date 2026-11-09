@@ -1,6 +1,7 @@
 ---
 name: tutorial-screencast
 description: Produce videos tutoriales de software como grabación de pantalla simulada (HyperFrames, 1920×1080), con réplica fiel de la interfaz, cursor animado, pulso en cada clic, zooms con zona resaltada, rótulos «Paso N», etiquetas cortas, intro y cierre de marca. Úsala siempre que el usuario pida un video tutorial, un paso a paso, un «cómo configurar / cómo crear / cómo usar X» en un sistema o app, un video de onboarding, de capacitación o de soporte que enseñe a usar una pantalla, o diga «quiero un video como el de Bodegas de clasificación», aunque no diga «screencast». No la uses para anuncios, shorts promocionales, launch films ni motion graphics de marca, que son otros formatos.
+compatibility: Requiere las skills de HyperFrames (npx skills add heygen-com/hyperframes; como mínimo hyperframes y hyperframes-cli), Node.js 22+ y, para exportar el MP4, ffmpeg o Docker.
 ---
 
 # tutorial-screencast
@@ -11,7 +12,8 @@ El video de referencia es **«Cómo configurar Bodegas de clasificación en Suit
 
 ## Antes de empezar
 
-- Carga la skill `/hyperframes`: es el contrato de render (clips, `data-start` y `data-duration`, timelines pausadas, determinismo). Esta skill se apoya en él y no lo repite.
+- Carga la skill `/hyperframes`: es el contrato de render (clips, `data-start` y `data-duration`, timelines pausadas, determinismo). Esta skill se apoya en él y no lo repite. **Si no está instalada**, díselo al usuario y pídele que la instale con `npx skills add heygen-com/hyperframes -g` (o sin `-g`, en el mismo alcance que esta skill) antes de seguir. Sin ese contrato, el video puede verse bien en la vista previa y fallar en el render.
+- Comprueba la máquina con `npx hyperframes doctor`. Para exportar hacen falta ffmpeg o Docker; si no hay ninguno, el video se puede construir y previsualizar igual, pero avisa antes de llegar al render.
 - Lee `references/style.md` antes de escribir movimiento. Tiene todos los valores (colores, tamaños, tiempos, curvas). El resumen de abajo es solo para orientarse.
 - Copia `assets/template/` como punto de partida. Trae el kit de cámara, cursor, clic, resaltado, rótulos y etiquetas ya probado. No lo reescribas: adáptalo.
 
