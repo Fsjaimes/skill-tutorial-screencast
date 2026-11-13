@@ -18,6 +18,15 @@
         data-start="0" data-duration="6.6" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
       <div id="outro" data-composition-id="outro" data-composition-src="compositions/outro.html"
         data-start="31.6" data-duration="7" data-track-index="2" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+
+      <!--
+        SONIDO · modo ambiente (references/audio.md).
+        Música de la biblioteca copiada a assets/audio/musica.mp3. La línea de volumen sube en 1 s,
+        se mantiene a 0,35 y baja en 1,5 s al final. En modo narración el nivel es 0,12 (cama bajo la voz)
+        y sube a 0,35 solo en la intro y el cierre. En modo silencio, borra este <audio>.
+      -->
+      <audio id="musica" src="assets/audio/musica.mp3" data-start="0" data-duration="38.6" data-volume="0.35" data-track-index="10"
+        data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":1,"v":0.35},{"t":37.1,"v":0.35},{"t":38.6,"v":0}]}]}'></audio>
     </div>
     <script>
       window.__timelines["main"] = gsap.timeline({ paused: true });

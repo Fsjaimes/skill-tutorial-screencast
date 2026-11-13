@@ -91,6 +91,20 @@
     </div>
 
     <div id="hud" class="clip" data-start="0" data-duration="26.4" data-track-index="2" data-layout-allow-overflow data-layout-allow-overlap></div>
+
+    <!--
+      ═══ SONIDO (tiempos locales a esta escena) ═══
+      Escrito en el HTML, no creado por script: así HyperFrames lo mezcla en el render y se puede
+      mover en Studio. Un <audio data-sfx="click"> por cada click() de la coreografía, en el mismo
+      instante; el kit avisa en la consola si falta alguno. Narración: un <audio> por paso
+      (assets/audio/voz/paso-NN.mp3), con data-start en el inicio de su paso. Volúmenes en references/audio.md.
+    -->
+    <div id="sound">
+      <audio id="sfx-click-1" data-sfx="click" src="assets/sfx/click.mp3" data-start="2.6" data-duration="0.3" data-hf-media-start-basis="local" data-volume="0.5" data-track-index="20"></audio>
+      <audio id="sfx-click-2" data-sfx="click" src="assets/sfx/click.mp3" data-start="9.6" data-duration="0.3" data-hf-media-start-basis="local" data-volume="0.5" data-track-index="20"></audio>
+      <audio id="sfx-click-3" data-sfx="click" src="assets/sfx/click.mp3" data-start="18.2" data-duration="0.3" data-hf-media-start-basis="local" data-volume="0.5" data-track-index="20"></audio>
+      <audio id="sfx-exito-1" data-sfx="exito" src="assets/sfx/exito.mp3" data-start="18.5" data-duration="0.8" data-hf-media-start-basis="local" data-volume="0.6" data-track-index="21"></audio>
+    </div>
   </div>
 
   <script>
@@ -140,7 +154,9 @@
 
         // Clic: pulsación del cursor y pulso en el punto. Llama a click() ≥ 0,5 s después de que llegue.
         const rips = document.getElementById("rips");
+        const CLICKS = [];
         function click(t) {
+          CLICKS.push(t);
           tl.fromTo("#cursor-in", { scale: 1 }, { scale: 0.86, duration: 0.08, ease: "power2.out", immediateRender: false }, t);
           tl.fromTo("#cursor-in", { scale: 0.86 }, { scale: 1, duration: 0.14, ease: "power2.out", immediateRender: false }, t + 0.08);
           const r = document.createElement("div");
@@ -234,6 +250,11 @@
         label(19.8, 22.4, "Confirmación: el cliente quedó creado", 1670, 196, "below");
         tl.fromTo("#toast", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, 23.0);
         wide(23.2);
+
+        // Cada click() necesita su <audio data-sfx="click"> en el bloque SONIDO (modos ambiente y narración).
+        const sounded = [...document.querySelectorAll('#sound audio[data-sfx="click"]')].map((a) => parseFloat(a.getAttribute("data-start")));
+        const missing = CLICKS.filter((t) => !sounded.some((s) => Math.abs(s - t) < 0.06));
+        if (sounded.length && missing.length) console.error("tutorial-screencast: clics sin sonido en t = " + missing.join(", "));
 
         window.__timelines["tutorial"] = tl;
         if (typeof window.__hfForceTimelineRebind === "function") window.__hfForceTimelineRebind();
