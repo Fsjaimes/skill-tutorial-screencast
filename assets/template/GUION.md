@@ -10,6 +10,8 @@ Video tutorial de 1920×1080 a 60 fps, de unos ‹N› s. Simula una grabación 
 | ‹botón o campo del pedido› | ‹lo que existe de verdad› |
 | ‹mensaje esperado› | ‹mensaje literal de confirmación› |
 
+**Audio:** ‹ambiente | narración | silencio› · música: ‹ID de la pista del catálogo, o «ninguna»›
+
 **Propósito (una frase):** ‹para qué sirve la tarea, en el trabajo de quién›.
 
 **Datos de ejemplo** (ficticios y coherentes): ‹…›.
