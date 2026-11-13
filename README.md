@@ -12,6 +12,7 @@ Una skill para [Claude Code](https://claude.com/claude-code) que convierte el te
 | **Intro** (≈6 s) | Marca, título «Cómo ‹tarea›» y una línea de para qué sirve |
 | **Pasos** (3–6) | Navegación, explicación de la pantalla, acción (clic, casilla, escritura letra a letra), advertencias, guardado con el mensaje real y verificación |
 | **Cierre** (≈7 s) | «¡Listo! Ya ‹logro›.», un resumen de una línea y la marca |
+| **Sonido** | Modo **ambiente** (música y efectos), **narración** (tu voz sobre un guion de locución) o **silencio** |
 | **Proyecto HyperFrames** | Editable en la vista previa (Studio) y renderizable a MP4 |
 
 El sistema visual completo (colores, tipografía, niveles de zoom, tiempos del cursor, curvas de animación y ritmo por escena) está en `references/style.md`, con valores concretos.
@@ -43,7 +44,7 @@ Revisa todo de una vez con `npx hyperframes doctor`.
 ### Global, con `-g` (recomendado)
 
 ```bash
-npx skills add Fsjaimes/tutorial-screencast -g
+npx skills add Fsjaimes/skill-tutorial-screencast -g
 ```
 
 Con `-g` la skill se instala **a nivel de usuario** (en `~/.agents/skills/`, enlazada a `~/.claude/skills/`) y Claude Code la tiene disponible en **todos tus proyectos**. Es lo recomendado si haces tutoriales de varios sistemas o desde distintas carpetas.
@@ -52,7 +53,7 @@ Con `-g` la skill se instala **a nivel de usuario** (en `~/.agents/skills/`, enl
 
 ```bash
 cd ruta/de/tu/proyecto
-npx skills add Fsjaimes/tutorial-screencast
+npx skills add Fsjaimes/skill-tutorial-screencast
 ```
 
 Sin `-g` la skill se instala **solo en el proyecto donde ejecutas el comando** (en su carpeta `.claude/skills/`, y registrada en su `skills-lock.json`). Claude Code solo la ve cuando trabaja dentro de esa carpeta. Sirve para fijar la skill a un repositorio concreto (por ejemplo, la carpeta de videos del equipo) o para probar una versión sin afectar al resto de proyectos.
@@ -68,8 +69,32 @@ npx skills update tutorial-screencast        # o: npx skills update -g para las 
 ### Manual (sin `npx skills`)
 
 ```bash
-git clone https://github.com/Fsjaimes/tutorial-screencast.git ~/.claude/skills/tutorial-screencast
+git clone https://github.com/Fsjaimes/skill-tutorial-screencast.git ~/.claude/skills/tutorial-screencast
 ```
+
+## Sonido
+
+Cada video lleva uno de tres modos de audio:
+
+| Modo | Qué lleva |
+|---|---|
+| `ambiente` *(por defecto)* | Música de fondo de la biblioteca y efectos de clic, éxito y transición |
+| `narración` | Tu voz, la música como cama bajo la voz y los mismos efectos |
+| `silencio` | Nada |
+
+**Narración: tú pones la voz.** La skill no genera voz. Escribe un `LOCUCION.md` con el texto de cada paso, su duración objetivo y cómo pronunciar los nombres de la interfaz. Lo conviertes en audio con lo que prefieras (tu voz, Kokoro, HeyGen, ElevenLabs…), le entregas los archivos y la skill ajusta el video a tu voz.
+
+**Música: biblioteca local.** El catálogo (9 pistas de [Pixabay](https://pixabay.com/service/license-summary/), con su uso recomendado y su enlace) está en `references/audio.md`. **Los MP3 no vienen en este repositorio**: la licencia de Pixabay permite usarlos gratis en tus videos, pero no redistribuirlos tal cual. Descárgalos desde los enlaces del catálogo a una carpeta y dile a la skill dónde están:
+
+```bash
+export TUTORIAL_AUDIO_DIR="$HOME/ruta/a/tu/musica"
+```
+
+Si no defines la variable, la skill los busca en `~/Desktop/PROYECTOS/videos/audio/musica/`.
+
+**Efectos:** vienen incluidos en `assets/template/assets/sfx/`. Son CC0 (dominio público), así que se pueden redistribuir; su origen está en `CREDITS.md`.
+
+> Para leer y mezclar audio, HyperFrames necesita **ffmpeg** (o renderizar con `--docker`). Sin él, el video se construye y se previsualiza, pero el check marca los audios como ilegibles y el render sale mudo.
 
 ## Uso
 
@@ -87,13 +112,15 @@ Lo único imprescindible es **la pantalla real**: el código fuente de la págin
 
 ```
 tutorial-screencast/
-├── SKILL.md                 # punto de entrada: principios, flujo de 10 pasos, errores conocidos y checklist
+├── SKILL.md                 # punto de entrada: principios, flujo de 11 pasos, errores conocidos y checklist
 ├── references/
 │   ├── style.md             # valores concretos: color, tipografía, zoom, cursor, clic, etiquetas, ritmo y curvas
 │   ├── narrative.md         # estructura intro → pasos → cierre, reglas de textos y plantilla de guion
+│   ├── audio.md             # modos de sonido, catálogo de música, volúmenes y flujo de narración
 │   └── ui-replica.md        # cómo replicar una pantalla desde código o captura
 ├── assets/
-│   ├── template/            # proyecto base: kit (cámara, cursor, clic, escritura, resaltado, rótulos) + demo
+│   ├── template/            # proyecto base: kit (cámara, cursor, clic, escritura, resaltado, rótulos, sonido) + demo,
+│   │                        #   GUION.md, LOCUCION.md y los efectos CC0 en assets/sfx/
 │   └── example/             # video de referencia: «Cómo configurar Bodegas de clasificación»
 └── evals/                   # casos de prueba de la skill
 ```
@@ -107,4 +134,6 @@ tutorial-screencast/
 ## Licencias
 
 - Código y documentación de la skill: [MIT](LICENSE).
+- Los efectos de sonido (`assets/template/assets/sfx/`) son **CC0**; origen en su `CREDITS.md`.
+- La música del catálogo es de Pixabay y **no se incluye**; se usa bajo la [licencia de Pixabay](https://pixabay.com/service/license-summary/).
 - La fuente **Saira** (`assets/template/assets/fonts/`) se distribuye bajo la [SIL Open Font License 1.1](assets/template/assets/fonts/OFL.txt). © The Saira Project Authors.
